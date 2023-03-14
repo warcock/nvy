@@ -24,7 +24,7 @@ class desiredRewrite:
     desiredRewriteV1_Text_BoldFont = '\033[1m'
     desiredRewriteV1_Text_UnderlineText = '\033[4m'
     desiredRewriteV1_Text_Color_End = '\033[0m'
-
+    
 # -----------------------------------------------
 
 # -----------------------------------------------
@@ -265,24 +265,25 @@ async def pendchat(interaction: discord.Interaction, amount: str):
 @tree.command(name = "format", description = "sends the format for buying dhc", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def format(interaction: discord.Interaction):
     format1 = """```diff
-    - please wait until a staff, dropper, or a owner responds to your ticket.
+- please wait until a staff, dropper, or a owner responds to your ticket.
     ```
     """
     format2 = """```diff
-    + amount of dhc
-    + form of payment [robux, cashapp, etc]
-    + timezone
++ amount of dhc
++ form of payment [robux, cashapp, etc]
++ timezone
 
-    - WE DO NOT ACCEPT REFUNDS AFTER YOU HAVE PURCHASED, THIS IS FINAL!
+- WE DO NOT ACCEPT REFUNDS AFTER YOU HAVE PURCHASED, THIS IS FINAL!
+
+[[       discord.gg/zdhc       ]]
     ```
     """
     embed = discord.Embed(color=0x2F3136)
     embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-    embed.add_field(name="**thanks for buying from zems da hood cash store!**", value="please use the following format!")
-    embed.add_field(name=f"\n", value=format1)
-    embed.add_field(name=f"\n", value=format2)
-    embed.set_footer("discord.gg/zdhc")
-    await interaction.response.send_message("<@&906822729456570388>", embed=embed)  
+    embed.add_field(name="**thanks for buying from zems da hood cash store!**", value="please use the following format!", inline=False)
+    embed.add_field(name=f"\n", value=format1, inline=False)
+    embed.add_field(name=f"\n", value=format2, inline=False)
+    await interaction.response.send_message(embed=embed)  
 
 @tree.command(name = "csub", description="checks your current subscription", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def csub(interaction: discord.Interaction):
