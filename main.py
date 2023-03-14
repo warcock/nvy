@@ -43,6 +43,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**sub `type`**",value="loads the gamepass list for subscriptions", inline=False)
         embed.add_field(name=f"**pendannc `amount`**",value="pings pend inside announcement channel telling them you dropped `amount`", inline=False)
         embed.add_field(name=f"**pendchat `amount`**",value="pings pend inside the current channel telling them you dropped `amount`", inline=False)
+        embed.add_field(name=f"**format**", value="sends the format for buying dhc", inline=False)
         embed.add_field(name="**EVERYTHING UNDER HERE IS CURRENTLY NOT DONE!**",value="MOST OF THESE DO NOT WORK!", inline=False)
         embed.add_field(name=f"**csub**",value="checks your current subscription", inline=False)
         embed.add_field(name=f"**wl**",value="upgrades a user's subcsription", inline=False)
@@ -261,90 +262,111 @@ async def pendchat(interaction: discord.Interaction, amount: str):
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pendannc // predropped!**", value=f"{interaction.user} has dropped {amount}m! ping them in your ticket to claim")
         await interaction.response.send_message("<@&906822729456570388>", embed=embed)  
+@tree.command(name = "format", description = "sends the format for buying dhc", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def format(interaction: discord.Interaction):
+    format1 = """```diff
+    - please wait until a staff, dropper, or a owner responds to your ticket.
+    ```
+    """
+    format2 = """```diff
+    + amount of dhc
+    + form of payment [robux, cashapp, etc]
+    + timezone
 
-# @tree.command(name = "csub", description="checks your current subscription", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-# async def csub(interaction: discord.Interaction):
-#     casual = discord.utils.get(interaction.guild.roles, id=1068817202934980628)
-#     bronze = discord.utils.get(interaction.guild.roles, id=1068817214486097920)
-#     gold = discord.utils.get(interaction.guild.roles, id=1068817221830311966)
-#     platinum = discord.utils.get(interaction.guild.roles, id=1068817240272674856)
-#     diamond = discord.utils.get(interaction.guild.roles, id=1068817244160802876)
+    - WE DO NOT ACCEPT REFUNDS AFTER YOU HAVE PURCHASED, THIS IS FINAL!
+    ```
+    """
+    embed = discord.Embed(color=0x2F3136)
+    embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+    embed.add_field(name="**thanks for buying from zems da hood cash store!**", value="please use the following format!")
+    embed.add_field(name=f"\n", value=format1)
+    embed.add_field(name=f"\n", value=format2)
+    embed.set_footer("discord.gg/zdhc")
+    await interaction.response.send_message("<@&906822729456570388>", embed=embed)  
 
-#     if casual in interaction.user.roles:
-#         embed = discord.Embed(color=0x2F3136)
-#         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#         embed.add_field(name="**subscription**", value="current subscription - `casual`")
-#         await interaction.response.send_message(embed=embed)
-#     if bronze in interaction.user.roles:
-#         embed1 = discord.Embed(color=0x2F3136)
-#         embed1.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#         embed1.add_field(name="**subscription**", value="current subscription - `bronze`")
-#         await interaction.response.send_message(embed=embed1)
-#     if gold in interaction.user.roles:
-#         embed2 = discord.Embed(color=0x2F3136)
-#         embed2.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#         embed2.add_field(name="**subscription**", value="current subscription - `gold`")
-#         await interaction.response.send_message(embed=embed2)
-#     if platinum in interaction.user.roles:
-#         embed3 = discord.Embed(color=0x2F3136)
-#         embed3.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#         embed3.add_field(name="**subscription**", value="current subscription - `platinum`")
-#         await interaction.response.send_message(embed=embed3) 
-#     if diamond in interaction.user.roles:
-#         embed4 = discord.Embed(color=0x2F3136)
-#         embed4.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#         embed4.add_field(name="**subscription**", value="current subscription - `diamond`")
-#         await interaction.response.send_message(embed=embed4)
+@tree.command(name = "csub", description="checks your current subscription", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def csub(interaction: discord.Interaction):
+    casual = discord.utils.get(interaction.guild.roles, id=1068817202934980628)
+    bronze = discord.utils.get(interaction.guild.roles, id=1068817214486097920)
+    gold = discord.utils.get(interaction.guild.roles, id=1068817221830311966)
+    platinum = discord.utils.get(interaction.guild.roles, id=1068817240272674856)
+    diamond = discord.utils.get(interaction.guild.roles, id=1068817244160802876)
 
-# @tree.command(name = "wl", description="adds a member a subscription", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-# @app_commands.describe(type="type of subscription to choose from")
-# @app_commands.choices(type=[
-#     discord.app_commands.Choice(name='casual', value=1),
-#     discord.app_commands.Choice(name='bronze', value=2),
-#     discord.app_commands.Choice(name='gold', value=3),
-#     discord.app_commands.Choice(name='platinum', value=4),
-#     discord.app_commands.Choice(name='diamond', value=5),
-# ])
-# async def wl(interaction: discord.Interaction, type: discord.app_commands.Choice[int]):
-#     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
-#     if bot.role not in interaction.user.roles:
-#         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
-#     else: 
-#         casual = interaction.guild.get_role(972493889573388298)
-#         bronze = interaction.guild.get_role(972493900214321244)
-#         gold = interaction.guild.get_role(972493913254428724)
-#         platinum = interaction.guild.get_role(972493916714725437)
-#         diamond = interaction.guild.get_role(972493919763980349)
-#         if type.value == 1:
-#             await interaction.user.add_roles(casual) 
-#             embed = discord.Embed(color=0x2F3136)
-#             embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#             embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `casual`")
-#             await interaction.response.send_message(embed=embed)  
-#         elif type.value == 2:
-#             await interaction.user.add_roles(bronze) 
-#             embed = discord.Embed(color=0x2F3136)
-#             embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#             embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `bronze`")
-#             await interaction.response.send_message(embed=embed)  
-#         elif type.value == 3:
-#             await interaction.user.add_roles(gold) 
-#             embed = discord.Embed(color=0x2F3136)
-#             embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#             embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `gold`")
-#             await interaction.response.send_message(embed=embed)  
-#         elif type.value == 4:
-#             await interaction.user.add_roles(platinum) 
-#             embed = discord.Embed(color=0x2F3136)
-#             embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#             embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `platinum`")
-#             await interaction.response.send_message(embed=embed)  
-#         elif type.value == 5:
-#             await interaction.user.add_roles(diamond) 
-#             embed = discord.Embed(color=0x2F3136)
-#             embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-#             embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `diamond`")
-#             await interaction.response.send_message(embed=embed)  
+    if casual in interaction.user.roles:
+        embed = discord.Embed(color=0x2F3136)
+        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed.add_field(name="**subscription**", value="current subscription - `casual`")
+        await interaction.response.send_message(embed=embed)
+    if bronze in interaction.user.roles:
+        embed1 = discord.Embed(color=0x2F3136)
+        embed1.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed1.add_field(name="**subscription**", value="current subscription - `bronze`")
+        await interaction.response.send_message(embed=embed1)
+    if gold in interaction.user.roles:
+        embed2 = discord.Embed(color=0x2F3136)
+        embed2.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed2.add_field(name="**subscription**", value="current subscription - `gold`")
+        await interaction.response.send_message(embed=embed2)
+    if platinum in interaction.user.roles:
+        embed3 = discord.Embed(color=0x2F3136)
+        embed3.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed3.add_field(name="**subscription**", value="current subscription - `platinum`")
+        await interaction.response.send_message(embed=embed3) 
+    if diamond in interaction.user.roles:
+        embed4 = discord.Embed(color=0x2F3136)
+        embed4.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed4.add_field(name="**subscription**", value="current subscription - `diamond`")
+        await interaction.response.send_message(embed=embed4)
+
+@tree.command(name = "wl", description="adds a member a subscription", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+@app_commands.describe(type="type of subscription to choose from")
+@app_commands.choices(type=[
+    discord.app_commands.Choice(name='casual', value=1),
+    discord.app_commands.Choice(name='bronze', value=2),
+    discord.app_commands.Choice(name='gold', value=3),
+    discord.app_commands.Choice(name='platinum', value=4),
+    discord.app_commands.Choice(name='diamond', value=5),
+])
+async def wl(interaction: discord.Interaction, type: discord.app_commands.Choice[int]):
+    bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
+    if bot.role not in interaction.user.roles:
+        await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
+    else: 
+        casual = interaction.guild.get_role(972493889573388298)
+        bronze = interaction.guild.get_role(972493900214321244)
+        gold = interaction.guild.get_role(972493913254428724)
+        platinum = interaction.guild.get_role(972493916714725437)
+        diamond = interaction.guild.get_role(972493919763980349)
+        if type.value == 1:
+            await interaction.user.add_roles(casual) 
+            embed = discord.Embed(color=0x2F3136)
+            embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+            embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `casual`")
+            await interaction.response.send_message(embed=embed)  
+        elif type.value == 2:
+            await interaction.user.add_roles(bronze) 
+            embed = discord.Embed(color=0x2F3136)
+            embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+            embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `bronze`")
+            await interaction.response.send_message(embed=embed)  
+        elif type.value == 3:
+            await interaction.user.add_roles(gold) 
+            embed = discord.Embed(color=0x2F3136)
+            embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+            embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `gold`")
+            await interaction.response.send_message(embed=embed)  
+        elif type.value == 4:
+            await interaction.user.add_roles(platinum) 
+            embed = discord.Embed(color=0x2F3136)
+            embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+            embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `platinum`")
+            await interaction.response.send_message(embed=embed)  
+        elif type.value == 5:
+            await interaction.user.add_roles(diamond) 
+            embed = discord.Embed(color=0x2F3136)
+            embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+            embed.add_field(name="**upgraded!**", value=f"{interaction.user.name}'s subscription upgraded to // `diamond`")
+            await interaction.response.send_message(embed=embed)  
 
 # -----------------------------------------------
 
