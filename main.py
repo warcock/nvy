@@ -1,4 +1,5 @@
 import discord
+import time
 import datetime
 from termcolor import colored
 from discord import app_commands
@@ -44,6 +45,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**pendannc `amount`**",value="pings pend inside announcement channel telling them you dropped `amount`", inline=False)
         embed.add_field(name=f"**pendchat `amount`**",value="pings pend inside the current channel telling them you dropped `amount`", inline=False)
         embed.add_field(name=f"**format**", value="sends the format for buying dhc", inline=False)
+        embed.add_field(name=f"**transactions**", value="sends the link to check for transactions", inline=False)
         embed.add_field(name="**EVERYTHING UNDER HERE IS CURRENTLY NOT DONE!**",value="MOST OF THESE DO NOT WORK!", inline=False)
         embed.add_field(name=f"**csub**",value="checks your current subscription", inline=False)
         embed.add_field(name=f"**wl**",value="upgrades a user's subcsription", inline=False)
@@ -283,6 +285,13 @@ async def format(interaction: discord.Interaction):
     embed.add_field(name="**thanks for buying from zems da hood cash store!**", value="please use the following format!", inline=False)
     embed.add_field(name=f"\n", value=format1, inline=False)
     embed.add_field(name=f"\n", value=format2, inline=False)
+    await interaction.response.send_message(embed=embed)  
+
+@tree.command(name = "transactions", description = "sends the link to check for transactions", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def transactions(interaction: discord.Interaction):
+    embed = discord.Embed(color=0x2F3136)
+    embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+    embed.add_field(name="**transactions**", value="https://www.roblox.com/transactions", inline=False)
     await interaction.response.send_message(embed=embed)  
 
 @tree.command(name = "csub", description="checks your current subscription", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
