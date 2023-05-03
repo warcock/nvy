@@ -289,12 +289,24 @@ async def transactions(interaction: discord.Interaction):
 
 @tree.command(name = "verify", description = "verifies the current ticket you are sending this message in", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def verify(interaction: discord.Interaction):
-    embed = discord.Embed(color=0x2F3136)
-    embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-    embed.add_field(name="**Thanks for buying from zems market!**", value=f"your ticket has been verified & checked by {interaction.user}", inline=False)
-    embed.add_field(name=f"The average wait time for your order is around `1-2` days, if you wish to pay extra to get your order a bit faster, please use the following command.", value="run /fastpass in your ticket and send proof of purchase.", inline=False)
-    embed.add_field(name=f"What should I do after getting my order verified?", value="Please be patient, don't ask multiple times for your cash. It wont speed up the process.", inline=False)
-    await interaction.response.send_message(embed=embed)  
+    bot.role = interaction.guild.get_role(1061629027636490281)
+    customerTrue = discord.utils.get(interaction.guild.roles, id=1091467375011971234)
+    if bot.role not in interaction.user.roles:
+        await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
+    else:
+        embed = discord.Embed(color=0x2F3136)
+        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed.add_field(name="**Thanks for buying from zems market!**", value=f"your ticket has been **checked & verified** by `{interaction.user} / [{interaction.user.id}]`", inline=False)
+        embed.add_field(name=f"\n", value="The average wait time for your order is around `1-2` days, if you wish to pay extra to get your order a bit faster, please use the following command", inline=False)
+        embed.add_field(name=f"\n", value="Run `/fastpass` in your ticket and send proof of purchase.", inline=False)
+        embed.add_field(name=f"\n", value="What should I do after getting my order verified?", inline=False)
+        embed.add_field(name=f"\n", value="Please be patient, don't ask multiple times for your cash. It wont speed up the process.", inline=False)
+        await interaction.response.send_message(embed=embed)  
+        if customerTrue not in interaction.user.roles:
+            customerRole = interaction.guild.get_role(1091467375011971234)
+            await interaction.user.add_roles(customerRole) 
+        else:
+            return
 
 
 # -----------------------------------------------
