@@ -13,7 +13,7 @@ tree = app_commands.CommandTree(bot)
 
 class desiredRewrite:
     desiredRewriteV1_ServerID = 905732450150391838
-    desiredRewriteV1_RoleRequiredID = 1061629027636490281
+    desiredRewriteV1_RoleRequiredID = 908242120073162772
     desiredRewriteV1_BotToken = "MTAxOTI0MzAzODM3NzI2NzI3MQ.GW8VfA.YBqNLpEmMl1v4nS-z3av5YQKwdw0EPpwqbDtdI"
     desiredRewriteV1_Color_Purple = '\033[95m'
     desiredRewriteV1_Color_Cyan = '\033[96m'
@@ -41,12 +41,11 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**pdremove `member`**",value="removes a person from the pending list", inline=False)
         embed.add_field(name=f"**dahood `amount`**",value="loads the gamepass list for dahood cash", inline=False)
         embed.add_field(name=f"**fastpass `type`**",value="loads the gamepass list for fastpasses", inline=False)
-        embed.add_field(name=f"**sub `type`**",value="loads the gamepass list for subscriptions", inline=False)
-        embed.add_field(name=f"**pendannc `amount`**",value="pings pend inside announcement channel telling them you dropped `amount`", inline=False)
-        embed.add_field(name=f"**pendchat `amount`**",value="pings pend inside the current channel telling them you dropped `amount`", inline=False)
+        embed.add_field(name=f"**drop**",value="pings customer inside dropping status channel to let them know you are dropping", inline=False)
+        embed.add_field(name=f"**predrop `amount`**",value="pings customer inside dropping status channel to let them know you've dropped [amount]", inline=False)
         embed.add_field(name=f"**format**", value="sends the format for buying dhc", inline=False)
         embed.add_field(name=f"**transactions**", value="sends the link to check for transactions", inline=False)
-        embed.add_field(name="**verify**",value="verifies the current ticket", inline=False)
+        embed.add_field(name=f"**verify**",value="verifies the current ticket", inline=False)
         await interaction.response.send_message(embed=embed)
 
 @tree.command(name = "membercount", description = "shows the total count of members inside the server", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
@@ -75,18 +74,18 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pending list add [success]**", value=f"{member} has been added to the pending list! [{amount}m pending]")
-        embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/a_69bf83a8da7f34ae2ab3b360cbc42536.gif?size=4096')
+        embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed1.add_field(name="**pending [add]**", value=f"{member} is now in pending for {amount}m!")
-        embed1.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/a_69bf83a8da7f34ae2ab3b360cbc42536.gif?size=4096')
+        embed1.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
         embed1.timestamp = datetime.datetime.utcnow()
-        await bot.get_channel(1034059803804315648).send(embed=embed1)
+        await bot.get_channel(1103243896781291560).send(embed=embed1)
 
 @tree.command(name = "pdremove", description = "removes a member from the pending list", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def pdremove(interaction: discord.Interaction, member: discord.Member, reason: str):
+async def pdremove(interaction: discord.Interaction, member: discord.Member):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
@@ -96,9 +95,15 @@ async def pdremove(interaction: discord.Interaction, member: discord.Member, rea
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pending list remove [success]**", value=f"{member} has been removed the pending list!")
-        embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/a_69bf83a8da7f34ae2ab3b360cbc42536.gif?size=4096')
+        embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
+        embed1 = discord.Embed(color=0x2F3136)
+        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed1.add_field(name="**pending [remove]**", value=f"{member}'s order has been completed! [pending embed deletion]")
+        embed1.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
+        embed1.timestamp = datetime.datetime.utcnow()
+        await bot.get_channel(1103243896781291560).send(embed=embed1)
 
 @tree.command(name = "dahood", description = "sends the amount of da hood cash you want to buy", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 @app_commands.describe(amount="amount of da hood cash to choose from")
@@ -113,69 +118,63 @@ async def pdremove(interaction: discord.Interaction, member: discord.Member, rea
     discord.app_commands.Choice(name='8M', value=8), 
     discord.app_commands.Choice(name='9M', value=9),
     discord.app_commands.Choice(name='10M', value=10),
-    discord.app_commands.Choice(name='15M', value=11),
-    discord.app_commands.Choice(name='20M', value=12),
+    discord.app_commands.Choice(name='10M [SHIRT]', value=11),
 ])
 async def dahood(interaction: discord.Interaction, amount: discord.app_commands.Choice[int]):
     if amount.value == 1:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106641/1-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639003/desires")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 2:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106651/2-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639128/desires")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 3:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106656/3-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639248/desires")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 4:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106660/4-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639425/4")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 5:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106667/5-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639530/5")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 6:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106709/6-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639686/6")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 7:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106710/7-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126639843/unnamed")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 8:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106717/8-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126640098/unnamed")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 9:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106730/9-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126640228/unnamed")
         await interaction.response.send_message(embed=embed)
     elif amount.value == 10:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106731/10-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/126640277/unnamed")
         await interaction.response.send_message(embed=embed)    
     elif amount.value == 11:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106746/15-mil-dhc")
-        await interaction.response.send_message(embed=embed)   
-    elif amount.value == 12:
-        embed = discord.Embed(color=0x2F3136)
-        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/game-pass/23106737/20-mil-dhc")
+        embed.add_field(name="**gamepass // dahood**", value=f"https://www.roblox.com/catalog/12830688443/10M-DHC")
         await interaction.response.send_message(embed=embed)   
 
 @tree.command(name = "fastpass", description = "sends the type of fastpass you want to buy", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
@@ -189,51 +188,21 @@ async def fastpass(interaction: discord.Interaction, type: discord.app_commands.
     if type.value == 1:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // fast pass**", value=f"https://www.roblox.com/game-pass/23106633/one-time-fast-pass")
+        embed.add_field(name="**gamepass // fast pass**", value=f"nil")
         await interaction.response.send_message(embed=embed)   
     elif type.value == 2:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // fast pass**", value=f"https://www.roblox.com/game-pass/23106530/one-time-fast-pass-2")
+        embed.add_field(name="**gamepass // fast pass**", value=f"nil")
         await interaction.response.send_message(embed=embed)   
     elif type.value == 3:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // fast pass**", value=f"https://www.roblox.com/game-pass/23106537/perma-fast-pass")
+        embed.add_field(name="**gamepass // fast pass**", value=f"https://www.roblox.com/catalog/12837544851/FAST-PASS-PERMANENT")
         await interaction.response.send_message(embed=embed)   
 
-@tree.command(name = "sub", description = "sends the type of subscription you want to buy", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-@app_commands.describe(type="type of subscription to choose from")
-@app_commands.choices(type=[
-    discord.app_commands.Choice(name='bronze', value=1),
-    discord.app_commands.Choice(name='gold', value=2),
-    discord.app_commands.Choice(name='platinum', value=3),
-    discord.app_commands.Choice(name='diamond', value=4),
-])
-async def sub(interaction: discord.Interaction, type: discord.app_commands.Choice[int]):
-    if type.value == 1:
-        embed = discord.Embed(color=0x2F3136)
-        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // subscription**", value=f"https://www.roblox.com/game-pass/85614118/bronze")
-        await interaction.response.send_message(embed=embed)  
-    elif type.value == 2:
-        embed = discord.Embed(color=0x2F3136)
-        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // subscription**", value=f"https://www.roblox.com/game-pass/85614187/gold")
-        await interaction.response.send_message(embed=embed)  
-    elif type.value == 3:
-        embed = discord.Embed(color=0x2F3136)
-        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // subscription**", value=f"https://www.roblox.com/game-pass/85614234/platinum")
-        await interaction.response.send_message(embed=embed)  
-    elif type.value == 4:
-        embed = discord.Embed(color=0x2F3136)
-        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // subscription**", value=f"https://www.roblox.com/game-pass/85614285/diamond")
-        await interaction.response.send_message(embed=embed)  
-
-@tree.command(name = "pendannc", description = "sends a message into the annoucement chat for predropped cash", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def pendannc(interaction: discord.Interaction, amount: str):
+@tree.command(name = "drop", description = "sends a message into the dropping status channel to tell customers that you are dropping", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def drop(interaction: discord.Interaction, amount: str):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
@@ -241,14 +210,14 @@ async def pendannc(interaction: discord.Interaction, amount: str):
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pendannc // predropped!**", value=f"{interaction.user} has dropped {amount}m! ping them in your ticket to claim")
-        await bot.get_channel(905791426045046794).send("<@&906822729456570388>", embed=embed)
+        await bot.get_channel(1086104928843477002).send("<@&1102160969095987244>", embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
         embed1.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed1.add_field(name="**pendannc // annoucement**", value=f"message successfully sent!")
         await interaction.response.send_message(embed=embed1)
 
-@tree.command(name = "pendchat", description = "sends a message into the current chat for predropped cash", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def pendchat(interaction: discord.Interaction, amount: str):
+@tree.command(name = "predrop", description = "sends a message into the current chat for predropped cash", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def predrop(interaction: discord.Interaction, amount: str):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
@@ -256,7 +225,7 @@ async def pendchat(interaction: discord.Interaction, amount: str):
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pendannc // predropped!**", value=f"{interaction.user} has dropped {amount}m! ping them in your ticket to claim")
-        await interaction.response.send_message("<@&906822729456570388>", embed=embed)  
+        await interaction.response.send_message("<@&1102160969095987244>", embed=embed)  
 @tree.command(name = "format", description = "sends the format for buying dhc", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def format(interaction: discord.Interaction):
     format1 = """```diff
@@ -281,7 +250,7 @@ async def format(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)  
 
 @tree.command(name = "transactions", description = "sends the link to check for transactions", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def transactions(interaction: discord.Interaction):
+async def transactions(interaction: discord.Interaction, member: discord.Member):
     embed = discord.Embed(color=0x2F3136)
     embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
     embed.add_field(name="**transactions**", value="https://www.roblox.com/transactions", inline=False)
@@ -289,7 +258,7 @@ async def transactions(interaction: discord.Interaction):
 
 @tree.command(name = "verify", description = "verifies the current ticket you are sending this message in", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def verify(interaction: discord.Interaction):
-    bot.role = interaction.guild.get_role(1061629027636490281)
+    bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     customerTrue = discord.utils.get(interaction.guild.roles, id=1091467375011971234)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
