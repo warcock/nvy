@@ -73,13 +73,13 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
         await member.add_roles(desiredRewriteGetRole) 
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**pending list add [success]**", value=f"{member} [{member.user.id}] has been added to the pending list! [{amount}m pending]")
+        embed.add_field(name="**pending list add [success]**", value=f"{member} has been added to the pending list! [{amount}m pending]")
         embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed1.add_field(name="**pending [add]**", value=f"{member} [{member.user.id}] is now in pending for {amount}m!")
+        embed1.add_field(name="**pending [add]**", value=f"{member} is now in pending for {amount}m!")
         embed1.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
         embed1.timestamp = datetime.datetime.utcnow()
         await bot.get_channel(1103243896781291560).send(embed=embed1)
@@ -100,7 +100,7 @@ async def pdremove(interaction: discord.Interaction, member: discord.Member):
         await interaction.response.send_message(embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed1.add_field(name="**pending [remove]**", value=f"{member} [{member.user.id}]'s order has been completed! [pending embed deletion]")
+        embed1.add_field(name="**pending [remove]**", value=f"{member}'s order has been completed! [pending embed deletion]")
         embed1.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
         embed1.timestamp = datetime.datetime.utcnow()
         await bot.get_channel(1103243896781291560).send(embed=embed1)
@@ -278,8 +278,6 @@ async def verify(interaction: discord.Interaction, member: discord.Member):
         if customerTrue not in interaction.user.roles:
             customerRole = get(member.guild.roles, id=1091467375011971234)
             await member.add_roles(customerRole) 
-        else:
-            return
 
 
 # -----------------------------------------------
