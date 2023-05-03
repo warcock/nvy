@@ -69,7 +69,7 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
     else:
-        desiredRewriteGetRole = get(member.guild.roles, id=906822729456570388)
+        desiredRewriteGetRole = get(member.guild.roles, id=1091467375011971234)
         await member.add_roles(desiredRewriteGetRole) 
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
@@ -90,7 +90,7 @@ async def pdremove(interaction: discord.Interaction, member: discord.Member):
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
     else:
-        desiredRewriteGetRole = get(member.guild.roles, id=906822729456570388)
+        desiredRewriteGetRole = get(member.guild.roles, id=1091467375011971234)
         await member.remove_roles(desiredRewriteGetRole) 
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
@@ -202,30 +202,34 @@ async def fastpass(interaction: discord.Interaction, type: discord.app_commands.
         await interaction.response.send_message(embed=embed)   
 
 @tree.command(name = "drop", description = "sends a message into the dropping status channel to tell customers that you are dropping", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def drop(interaction: discord.Interaction, amount: str):
+async def drop(interaction: discord.Interaction, size: str):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
     else:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**pendannc // predropped!**", value=f"{interaction.user} has dropped {amount}m! ping them in your ticket to claim")
+        embed.add_field(name="**dropping!**", value=f"{interaction.user} is currently dropping `{size}` orders, ping them inside your ticket")
         await bot.get_channel(1086104928843477002).send("<@&1102160969095987244>", embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
         embed1.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed1.add_field(name="**pendannc // annoucement**", value=f"message successfully sent!")
+        embed1.add_field(name="**success! // drop**", value=f"message successfully sent!")
         await interaction.response.send_message(embed=embed1)
 
 @tree.command(name = "predrop", description = "sends a message into the current chat for predropped cash", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def predrop(interaction: discord.Interaction, amount: str):
+async def predrop(interaction: discord.Interaction, amount: int):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
     else:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**pendannc // predropped!**", value=f"{interaction.user} has dropped {amount}m! ping them in your ticket to claim")
+        embed.add_field(name="**predropped!**", value=f"{interaction.user} has dropped {amount}m! ping them in your ticket to claim!")
         await interaction.response.send_message("<@&1102160969095987244>", embed=embed)  
+        embed1 = discord.Embed(color=0x2F3136)
+        embed1.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed1.add_field(name="**success! // predrop**", value=f"message successfully sent!")
+        await interaction.response.send_message(embed=embed1)
 @tree.command(name = "format", description = "sends the format for buying dhc", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def format(interaction: discord.Interaction):
     format1 = """```diff
@@ -250,14 +254,14 @@ async def format(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)  
 
 @tree.command(name = "transactions", description = "sends the link to check for transactions", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def transactions(interaction: discord.Interaction, member: discord.Member):
+async def transactions(interaction: discord.Interaction):
     embed = discord.Embed(color=0x2F3136)
     embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
     embed.add_field(name="**transactions**", value="https://www.roblox.com/transactions", inline=False)
     await interaction.response.send_message(embed=embed)  
 
 @tree.command(name = "verify", description = "verifies the current ticket you are sending this message in", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def verify(interaction: discord.Interaction):
+async def verify(interaction: discord.Interaction, member: discord.Member):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     customerTrue = discord.utils.get(interaction.guild.roles, id=1091467375011971234)
     if bot.role not in interaction.user.roles:
@@ -272,8 +276,8 @@ async def verify(interaction: discord.Interaction):
         embed.add_field(name=f"\n", value="Please be patient, don't ask multiple times for your cash. It wont speed up the process.", inline=False)
         await interaction.response.send_message(embed=embed)  
         if customerTrue not in interaction.user.roles:
-            customerRole = interaction.guild.get_role(1091467375011971234)
-            await interaction.user.add_roles(customerRole) 
+            customerRole = get(member.guild.roles, id=1091467375011971234)
+            await member.user.add_roles(customerRole) 
         else:
             return
 
