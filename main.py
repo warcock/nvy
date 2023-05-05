@@ -75,10 +75,10 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
         desiredRewriteGetRole = get(member.guild.roles, id=1091467375011971234)
         await member.add_roles(desiredRewriteGetRole) 
         FormatEmbed = f"""
-        username ; {member}                                    
-        amount ; {amount}    
-        price ; {price}      
-        paymentMethod ; {payment}
+        username ; `{member}  `                                 
+        amount ; `{amount}    `  
+        price ; {price}       `    
+        payment method ; {payment} `
         """
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
