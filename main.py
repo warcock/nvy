@@ -67,23 +67,30 @@ async def embed(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)
 
 @tree.command(name = "pdadd", description = "adds a member to the pending list", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
-async def pdadd(interaction: discord.Interaction, member: discord.Member, amount: int):
+async def pdadd(interaction: discord.Interaction, member: discord.Member, amount: int, price: str, payment: str):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed`** `//` **`you do not have permission to run this command!`**")
     else:
         desiredRewriteGetRole = get(member.guild.roles, id=1091467375011971234)
         await member.add_roles(desiredRewriteGetRole) 
+        FormatEmbed = f"""
+        username ; {member}                                    
+        amount ; {amount}    
+        price ; {price}      
+        paymentMethod ; {payment}
+        """
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pending list add [success]**", value=f"{member} has been added to the pending list! [{amount}m pending]")
-        embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
+        embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/a_69bf83a8da7f34ae2ab3b360cbc42536.gif?size=4096')
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed1.add_field(name="**pending [add]**", value=f"{member} is now in pending for {amount}m!")
-        embed1.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/f296c4eaa9b28be26620485f0b0e3de1.png?size=1024')
+        embed1.add_field(name="**pending [add]**", value=f"\n", inline=False)
+        embed1.add_field(name=f"\n", value=f"{FormatEmbed}", inline=False)
+        embed1.set_thumbnail(url=member.avatar)
         embed1.timestamp = datetime.datetime.utcnow()
         await bot.get_channel(1103243896781291560).send(embed=embed1)
 
@@ -192,8 +199,8 @@ async def dahood(interaction: discord.Interaction, amount: discord.app_commands.
 @tree.command(name = "fastpass", description = "sends the type of fastpass you want to buy", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 @app_commands.describe(type="type of fast pass to choose from")
 @app_commands.choices(type=[
-    discord.app_commands.Choice(name='one time fast pass [1]', value=1),
-    discord.app_commands.Choice(name='one time fast pass [2]', value=2),
+    discord.app_commands.Choice(name='one time fast pass [1] - unavaiable', value=1),
+    discord.app_commands.Choice(name='one time fast pass [2] - unavaiable', value=2),
     discord.app_commands.Choice(name='permanent fast pass', value=3),
 ])
 async def fastpass(interaction: discord.Interaction, type: discord.app_commands.Choice[int]):
