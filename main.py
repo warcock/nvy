@@ -47,6 +47,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**transactions**", value="sends the link to check for transactions", inline=False)
         embed.add_field(name=f"**verify `member`**",value="verifies the current ticket", inline=False)
         embed.add_field(name=f"**paypal**", value="sends zem's paypal username", inline=False)
+        embed.add_field(name=f"**group**", value = "sends zem's roblox group", inline=False)
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
@@ -325,6 +326,14 @@ async def paypal(interaction: discord.Interaction):
         """
         embed.add_field(name=f"\n", value=f"{paypal}", inline=False)
         embed.set_footer(text="thanks for buying!")
+        await interaction.response.send_message(embed=embed)
+
+@tree.command(name = "group", description = "sends zem's group link", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def group(interaction: discord.Interaction):
+        embed = discord.Embed(color=0x2F3136)
+        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed.add_field(name="**group**", value=f"https://www.roblox.com/groups/17177082/ZEMS-DHC")
+        embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
 # -----------------------------------------------
