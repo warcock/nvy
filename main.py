@@ -84,6 +84,7 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**pending list add [success]**", value=f"{member} has been added to the pending list! [{amount}m pending]")
         embed.set_thumbnail(url='https://cdn.discordapp.com/icons/905732450150391838/a_69bf83a8da7f34ae2ab3b360cbc42536.gif?size=4096')
+        embed1.set_footer(text=f" / {member.id}")
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
         embed1 = discord.Embed(color=0x2F3136)
@@ -92,6 +93,7 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
         embed1.add_field(name=f"\n", value=f"{FormatEmbed}", inline=False)
         embed1.set_thumbnail(url=member.avatar)
         embed1.timestamp = datetime.datetime.utcnow()
+        embed1.set_footer(text=f" / {member.id}")
         await bot.get_channel(1103243896781291560).send(embed=embed1)
 
 @tree.command(name = "pdremove", description = "removes a member from the pending list", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
