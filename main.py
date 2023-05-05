@@ -201,7 +201,7 @@ async def dahood(interaction: discord.Interaction, amount: discord.app_commands.
 @tree.command(name = "fastpass", description = "sends the type of fastpass you want to buy", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 @app_commands.describe(type="type of fast pass to choose from")
 @app_commands.choices(type=[
-    discord.app_commands.Choice(name='one time fast pass [1] - unavaiable', value=1),
+    discord.app_commands.Choice(name='one time fast pass [1]', value=1),
     discord.app_commands.Choice(name='one time fast pass [2] - unavaiable', value=2),
     discord.app_commands.Choice(name='permanent fast pass', value=3),
 ])
@@ -209,7 +209,7 @@ async def fastpass(interaction: discord.Interaction, type: discord.app_commands.
     if type.value == 1:
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**gamepass // fast pass**", value=f"nil")
+        embed.add_field(name="**gamepass // fast pass**", value=f"https://www.roblox.com/catalog/12839445174/one-time-fastpass")
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)   
     elif type.value == 2:
@@ -333,6 +333,18 @@ async def group(interaction: discord.Interaction):
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
         embed.add_field(name="**group**", value=f"https://www.roblox.com/groups/17177082/ZEMS-DHC")
+        embed.timestamp = datetime.datetime.utcnow()
+        await interaction.response.send_message(embed=embed)
+
+@tree.command(name = "addfp", description = "adds a member to the fastpass list", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def addfastpass(interaction: discord.Interaction, member: discord.Member):
+    bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
+    if bot.role not in interaction.user.roles:
+        await interaction.response.send_message("**`failed** `//` **`you do not have permission to run this command!`**")
+    else:
+        embed = discord.Embed(color=0x2F3136)
+        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed.add_field(name="**add fastpass [failed]**", value=f"command not done, process return")
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
