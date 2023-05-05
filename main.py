@@ -78,7 +78,7 @@ async def pdadd(interaction: discord.Interaction, member: discord.Member, amount
         await member.add_roles(desiredRewriteGetRole) 
         FormatEmbed = f"""
         username ; `{member}`                                 
-        amount ; `{amount}`  
+        amount ; `{amount}m`  
         price ; `{price}`    
         payment method ; `{payment}`
         """
