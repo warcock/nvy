@@ -37,7 +37,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**help**",value="sends a list of commands", inline=False)
         embed.add_field(name=f"**membercount**",value="shows the member count of the guild", inline=False)
         embed.add_field(name=f"**ping**",value="sends the bot's latency", inline=False)
-        embed.add_field(name=f"**pdadd `member` `amount` `price `payment`**",value="adds a person to the pending list", inline=False)
+        embed.add_field(name=f"**pdadd `member` `amount` `price` `payment`**",value="adds a person to the pending list", inline=False)
         embed.add_field(name=f"**pdremove `member`**",value="removes a person from the pending list", inline=False)
         embed.add_field(name=f"**dahood `amount`**",value="loads the gamepass list for dahood cash", inline=False)
         embed.add_field(name=f"**fastpass `type`**",value="loads the gamepass list for fastpasses", inline=False)
@@ -46,6 +46,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**format**", value="sends the format for buying dhc", inline=False)
         embed.add_field(name=f"**transactions**", value="sends the link to check for transactions", inline=False)
         embed.add_field(name=f"**verify `member`**",value="verifies the current ticket", inline=False)
+        embed.add_field(name=f"**paypal**", value="sends zem's paypal username", inline=False)
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
@@ -307,6 +308,24 @@ async def verify(interaction: discord.Interaction, member: discord.Member):
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)  
 
+@tree.command(name = "paypal", description = "send's zem's paypal username", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def paypal(interaction: discord.Interaction):
+    bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
+    if bot.role not in interaction.user.roles:
+        await interaction.response.send_message("**`failed** `//` **`you do not have permission to run this command!`**")
+    else:
+        embed = discord.Embed(color=0x2F3136)
+        embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        paypal = """
+        paypal ; `bartonn69`
+
+        eu btw!
+        
+        **ONCE SENDING THE MONEY, PLEASE PROVIDE PROOF!**
+        """
+        embed.add_field(name=f"\n", value=f"{paypal}", inline=False)
+        embed.set_footer(text="thanks for buying!")
+        await interaction.response.send_message(embed=embed)
 
 # -----------------------------------------------
 
