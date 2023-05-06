@@ -362,7 +362,6 @@ async def prices(interaction: discord.Interaction):
     embed = discord.Embed(color=0x2F3136)
     embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
     prices = """
-
     `ZEMS DHC MARKET PRICES!`
 
     **50 PER MIL**
