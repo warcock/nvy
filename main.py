@@ -48,6 +48,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**verify `member`**",value="verifies the current ticket", inline=False)
         embed.add_field(name=f"**paypal**", value="sends zem's paypal username", inline=False)
         embed.add_field(name=f"**group**", value = "sends zem's roblox group", inline=False)
+        embed.add_field(name=f"**fpadd**", value = "adds a member to the fastpass list", inline=False)
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
@@ -336,17 +337,38 @@ async def group(interaction: discord.Interaction):
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
-@tree.command(name = "addfp", description = "adds a member to the fastpass list", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+@tree.command(name = "fpadd", description = "adds a member to the fastpass list", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def addfastpass(interaction: discord.Interaction, member: discord.Member):
     bot.role = interaction.guild.get_role(desiredRewrite.desiredRewriteV1_RoleRequiredID)
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed** `//` **`you do not have permission to run this command!`**")
     else:
+        fastpassRole = get(member.guild.roles, id=1091467375011971234)
+        await member.add_roles(fastpassRole) 
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
-        embed.add_field(name="**add fastpass [failed]**", value=f"command not done, process return")
+        embed.add_field(name="**add fastpass [success]**", value=f"user has been given the fastpass role and has been added to the list! [{member.name}]")
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
+        embed1 = discord.Embed(color=0x2F3136)
+        embed1.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+        embed1.add_field(name="**fastpass**", value=f"{member.name} is now a fastpass buyer!", inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        await bot.get_channel(1104331342306619464).send(embed=embed1)
+
+@tree.command(name = "prices", description="sends the prices for buying dahood cash", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
+async def prices(interaction: discord.Interaction):
+    embed = discord.Embed(color=0x2F3136)
+    embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
+    prices = """
+    **50 PER MIL**
+
+    `10$ NITRO = 15 MIL`
+
+    `1$ PAYPAL = 8 MIL`
+    """
+    embed.add_field(name="**prices**", value=f"{prices}")
+    await interaction.response.send_message(embed=embed)
 
 # -----------------------------------------------
 
