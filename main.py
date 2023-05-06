@@ -49,6 +49,7 @@ async def help(interaction: discord.Interaction):
         embed.add_field(name=f"**paypal**", value="sends zem's paypal username", inline=False)
         embed.add_field(name=f"**group**", value = "sends zem's roblox group", inline=False)
         embed.add_field(name=f"**fpadd**", value = "adds a member to the fastpass list", inline=False)
+        embed.add_field(name=f"prices", value = "sends the prices for buying da hood cash", inline=False)
         embed.timestamp = datetime.datetime.utcnow()
         await interaction.response.send_message(embed=embed)
 
@@ -343,7 +344,7 @@ async def addfastpass(interaction: discord.Interaction, member: discord.Member):
     if bot.role not in interaction.user.roles:
         await interaction.response.send_message("**`failed** `//` **`you do not have permission to run this command!`**")
     else:
-        fastpassRole = get(member.guild.roles, id=1091467375011971234)
+        fastpassRole = get(member.guild.roles, id=1104124930905358408)
         await member.add_roles(fastpassRole) 
         embed = discord.Embed(color=0x2F3136)
         embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
@@ -361,13 +362,16 @@ async def prices(interaction: discord.Interaction):
     embed = discord.Embed(color=0x2F3136)
     embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
     prices = """
+
+    `ZEMS DHC MARKET PRICES!`
+
     **50 PER MIL**
 
-    `10$ NITRO = 15 MIL`
+    10$ NITRO = 15 MIL
 
-    `1$ PAYPAL = 8 MIL`
+    1$ PAYPAL = 8 MIL
     """
-    embed.add_field(name="**prices**", value=f"{prices}")
+    embed.add_field(name="**\n**", value=f"{prices}")
     await interaction.response.send_message(embed=embed)
 
 # -----------------------------------------------
