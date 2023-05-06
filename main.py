@@ -360,7 +360,6 @@ async def addfastpass(interaction: discord.Interaction, member: discord.Member):
 @tree.command(name = "prices", description="sends the prices for buying dahood cash", guild=discord.Object(id=desiredRewrite.desiredRewriteV1_ServerID))
 async def prices(interaction: discord.Interaction):
     embed = discord.Embed(color=0x2F3136)
-    embed.set_author(name=interaction.user, icon_url=interaction.user.avatar)
     prices = """
     `ZEMS DHC MARKET PRICES!`
 
