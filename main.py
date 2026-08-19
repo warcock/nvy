@@ -14,7 +14,7 @@ tree = app_commands.CommandTree(bot)
 class desiredRewrite:
     desiredRewriteV1_ServerID = 905732450150391838
     desiredRewriteV1_RoleRequiredID = 908242120073162772
-    desiredRewriteV1_BotToken = "MTAxOTI0MzAzODM3NzI2NzI3MQ.GW8VfA.YBqNLpEmMl1v4nS-z3av5YQKwdw0EPpwqbDtdI"
+    desiredRewriteV1_BotToken = "s"
     desiredRewriteV1_Color_Purple = '\033[95m'
     desiredRewriteV1_Color_Cyan = '\033[96m'
     desiredRewriteV1_Color_DarkCyan = '\033[36m'
